@@ -1,0 +1,42 @@
+version: "3"
+networks:
+    nginx-net:
+      driver: bridge
+services:
+  node1:
+    image: nginx:latest
+    volumes:
+      - ./config/node.conf:/etc/nginx/nginx.conf
+      - ./data:/data/nginx/cache
+    ports:
+      - 80
+    networks:
+      - nginx-net
+  node2:
+    image: nginx:latest
+    volumes:
+      - ./config/node.conf:/etc/nginx/nginx.conf
+      - ./data:/data/nginx/cache
+    ports:
+      - 80
+    networks:
+      - nginx-net
+  node3:
+    image: nginx:latest
+    volumes:
+      - ./config/node.conf:/etc/nginx/nginx.conf
+      - ./data:/data/nginx/cache
+    ports:
+      - 80
+    networks:
+      - nginx-net
+  load-balancer:
+    image: nginx:latest
+    volumes:
+      - ./config/lb.conf:/etc/nginx/nginx.conf
+    ports:
+      - 8080:8080
+      - 8081:8081
+      - 8082:8082
+    networks:
+      - nginx-net
